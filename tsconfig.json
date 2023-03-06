@@ -15,7 +15,7 @@
     "strict": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "noUnusedLocals": false, // TODO: true, // `<any>` is declared but its value is never read
+    "noUnusedLocals": true,
     "noUnusedParameters": true,
     "moduleResolution": "node",
     "jsx": "react",
