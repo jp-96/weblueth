@@ -34,7 +34,7 @@
     "web bluetooth",
     "state machine"
   ],
-  "author": "",
+  "author": "weblueth",
   "license": "MIT",
   "devDependencies": {
     "parcel": "^2.8.3",
