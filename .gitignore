@@ -334,7 +334,6 @@ ASALocalRun/
 out
 
 # parcel
-/.build
 /.parcel-cache
 
 package-lock.json

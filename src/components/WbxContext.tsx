@@ -1,8 +1,8 @@
 import React, { EffectCallback } from 'react';
 import { State } from 'xstate'; // yarn add --dev xstate
 import { createActorContext } from '@xstate/react'; // yarn add --dev @xstate/react
-import { createWbContext, machineWithoutContext } from '../wb/WbMachine';
-import { WbConnection, WbContext, WbBoundCallback, GetServices, RequestDevice, WbCustomServices } from '../wb/WbContext';
+import { createWbContext, machineWithoutContext } from '../core/WbMachine';
+import { WbConnection, WbContext, WbBoundCallback, GetServices, RequestDevice, WbCustomServices } from '../core/WbContext';
 
 const WbxActorContext = createActorContext(machineWithoutContext);
 

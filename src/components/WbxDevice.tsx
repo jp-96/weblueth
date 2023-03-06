@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { WbBoundCallback } from '../wb/WbContext';
+import { WbBoundCallback } from '../core/WbContext';
 import { WbxDeviceEffector, useWbxActor } from './WbxContext';
 
 interface Props {
