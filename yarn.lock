@@ -718,11 +718,6 @@
   resolved "https://registry.yarnpkg.com/@trysound/sax/-/sax-0.2.0.tgz#cccaab758af56761eb7bf37af6f03f326dd798ad"
   integrity sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==
 
-"@types/node@8.10.40":
-  version "8.10.40"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.40.tgz#4314888d5cd537945d73e9ce165c04cc550144a4"
-  integrity sha512-RRSjdwz63kS4u7edIwJUn8NqKLLQ6LyqF/X4+4jp38MBT3Vwetewi2N4dgJEshLbDwNgOJXNYoOwzVZUSSLhkQ==
-
 "@types/parse-json@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
@@ -1201,14 +1196,6 @@ mdn-data@2.0.14:
   version "2.0.14"
   resolved "https://registry.yarnpkg.com/mdn-data/-/mdn-data-2.0.14.tgz#7113fc4281917d63ce29b43446f701e68c25ba50"
   integrity sha512-dn6wd0uw5GsdswPFfsgMp5NSB0/aDe6fK94YJV/AJDYXL6HVLWBsxeq7js7Ad+mU2K9LAlwpk6kN2D5mwCPVow==
-
-microbit-web-bluetooth@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/microbit-web-bluetooth/-/microbit-web-bluetooth-0.6.0.tgz#88e2f8e0330795f9bd486f4482aeab164574b0a8"
-  integrity sha512-07weZxJk/1ccCbQB+xF/TW9TFW3eqaWaqWwQNXY7byNR4RgcEvQjlHbtlO390zHGCjHfuPyivvZG+gRY+TcZqQ==
-  dependencies:
-    "@types/node" "8.10.40"
-    "@types/web-bluetooth" "~0.0.5"
 
 micromatch@^4.0.5:
   version "4.0.5"

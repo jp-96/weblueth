@@ -29,11 +29,11 @@
             "problemMatcher": [],
         },
         {
-            "label": "yarn build:example",
+            "label": "yarn build:pages",
             "type": "shell",
             "command": "yarn",
             "args": [
-                "build:example",
+                "build:pages",
             ],
             "problemMatcher": [],
         },

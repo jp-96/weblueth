@@ -5,8 +5,8 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "command": "yarn start:example",
-            "name": "start:example",
+            "command": "yarn start:pages",
+            "name": "start:pages",
             "request": "launch",
             "type": "node-terminal",
             "resolveSourceMapLocations": [
