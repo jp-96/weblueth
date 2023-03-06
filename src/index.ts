@@ -3,6 +3,7 @@ import {
     WbxContextProvider,
     WbxCustomEventCallback,
     WbxDeviceEffector,
+    WbxServiceProps,
     WbxServicesEffector,
     useWbxActor
 } from './components/WbxContext';
@@ -15,6 +16,7 @@ export {
     WbxContextProvider,
     WbxCustomEventCallback,
     WbxDeviceEffector,
+    WbxServiceProps,
     WbxServicesEffector,
     useWbxActor,
 
