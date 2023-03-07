@@ -32,14 +32,13 @@ jobs:
         uses: actions/setup-node@v3
       - name: Clean Install
         run: yarn install --immutable --immutable-cache --check-cache --inline-builds
-      - name: Build
+      - name: Build Pages
         run: yarn build:pages
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          # Build (pages)
           path: 'dist'
       - name: Deploy to GitHub Pages
         id: deployment
