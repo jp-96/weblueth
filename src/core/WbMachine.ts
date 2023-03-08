@@ -10,7 +10,7 @@ export const machineWithoutContext = createMachine<WbContext>(
   // config
   {
     predictableActionArguments: true, // see: https://xstate.js.org/docs/guides/actions.html#actions
-    id: "microbit-bluetooth",
+    id: "weblueth",
     // Without context, so "machineWithoutContext.withContext()" must be called. 
     initial: "init",
     invoke: {
