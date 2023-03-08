@@ -1,4 +1,6 @@
-import React from 'react'
+import React from 'react';
+import { HeartRateContextProvider } from './components/HeartRateContextProvider';
+import HeartRate from './components/HeatRate';
 import Logo from './Logo';  // logo.svg ==> Log0.tsx
 //import './App.css'; // ==> ../index.html
 
@@ -18,6 +20,11 @@ function App() {
         >
           Learn React
         </a>
+        <p>
+          <HeartRateContextProvider connectionName='Heart Rate' bluetooth={window.navigator.bluetooth}>
+            <HeartRate />
+          </HeartRateContextProvider>
+        </p>
       </header>
     </div>
   );
