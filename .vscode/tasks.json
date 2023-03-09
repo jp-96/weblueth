@@ -29,6 +29,12 @@
             "problemMatcher": [],
         },
         {
+            "label": "npm-check-updates",
+            "type": "shell",
+            "command": "yarn global add npm-check-updates && npm-check-updates -u && yarn install",
+            "problemMatcher": [],
+        },
+        {
             "label": "yarn build:pages",
             "type": "shell",
             "command": "yarn",
