@@ -9,6 +9,11 @@ import {
 } from './components/WbxContext';
 import { WbxDevice } from './components/WbxDevice';
 import { WbxServices } from './components/WbxServices';
+import {
+    EventDispatcher,
+    ServiceHelper,
+    TypedDispatcher
+} from './gattbuilder';
 
 export {
     WbBoundCallback,
@@ -22,5 +27,9 @@ export {
 
     WbxDevice,
 
-    WbxServices
+    WbxServices,
+
+    EventDispatcher,
+    ServiceHelper,
+    TypedDispatcher
 }

@@ -1,3 +1,12 @@
+import { EventDispatcher, TypedDispatcher } from "./event-dispatcher";
+import { ServiceHelper } from "./service-helper";
+
+export { EventDispatcher, TypedDispatcher, ServiceHelper }
+
+export function createServiceBuilder(services: BluetoothRemoteGATTService[]): ServiceBuilder {
+    return new ServiceBuilder(services);
+}
+
 /*
 * micro:bit Web Bluetooth
 * Copyright (c) 2019 Rob Moran
