@@ -101,12 +101,15 @@ export default function HeartRate() {
     const [heartRateMeasurement, setHeartRateMeasurement] = useState<BluetoothRemoteGATTCharacteristic | undefined>(undefined);
     const [heartRate, setHeartRate] = useState<number | undefined>(undefined);
     const [location, setLocation] = useState(defaultLocation);
+    const [batteryService, setBatteryService] = useState<BluetoothRemoteGATTService | undefined>(undefined);
+    const [battery, setBattery] = useState<number | undefined>(undefined);
 
     const onHeartRateMeasurementChanged = useCallback((event: any) => {
         setHeartRate(parseHeartRate(event.target.value).heartRate);
     }, []);
 
     const onServicesBound: WbBoundCallback<Services> = async bound => {
+        // heart_rate
         const heart_rate = bound.target.heart_rate;
         if (heart_rate) {
             if (bound.binding) {
@@ -129,7 +132,25 @@ export default function HeartRate() {
 
             }
         }
+        // battery_service
+        if (bound.binding) {
+            setBatteryService(bound.target.battery_service);
+        } else {
+            setBatteryService(undefined);
+            setBattery(undefined);
+        }
     };
+
+    const handlerUpdateBattery = useCallback(async () => {
+        if (batteryService) {
+            const battery_level = await batteryService.getCharacteristic('battery_level');
+            const value = await battery_level.readValue();
+            setBattery(value.getUint8(0));
+        } else {
+            setBattery(undefined);
+        }
+
+    }, [batteryService])
 
     return (
         <>
@@ -147,6 +168,10 @@ export default function HeartRate() {
             Loaction: {location}
             <br />
             Heart Rate: {heartRate ?? "---"}
+            <br />
+            <button onClick={handlerUpdateBattery}>Read battery level</button>
+            <br />
+            Battery: {battery ?? "---"}
         </>
     );
 }
