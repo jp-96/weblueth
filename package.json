@@ -1,6 +1,6 @@
 {
   "name": "weblueth",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "My first react typescript package",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -37,6 +37,8 @@
   "author": "weblueth",
   "license": "MIT",
   "devDependencies": {
+    "@types/events": "^3.0.0",
+    "events": "^3.3.0",
     "process": "^0.11.10",
     "tslib": "^2.5.0",
     "typescript": "^4.9.5"
