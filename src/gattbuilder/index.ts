@@ -23,29 +23,29 @@
 * SOFTWARE.
 */
 
-import { DeviceInformationService } from "./services/device-information";
-import { ButtonService } from "./services/button";
-import { LedService } from "./services/led";
-import { TemperatureService } from "./services/temperature";
-import { AccelerometerService } from "./services/accelerometer";
-import { MagnetometerService } from "./services/magnetometer";
-import { IoPinService } from "./services/io-pin";
-import { UartService } from "./services/uart";
-import { EventService } from "./services/event";
-import { DfuControlService } from "./services/dfu-control";
+// import { DeviceInformationService } from "./services/device-information";
+// import { ButtonService } from "./services/button";
+// import { LedService } from "./services/led";
+// import { TemperatureService } from "./services/temperature";
+// import { AccelerometerService } from "./services/accelerometer";
+// import { MagnetometerService } from "./services/magnetometer";
+// import { IoPinService } from "./services/io-pin";
+// import { UartService } from "./services/uart";
+// import { EventService } from "./services/event";
+// import { DfuControlService } from "./services/dfu-control";
 
-export interface Services {
-    deviceInformationService?: DeviceInformationService;
-    buttonService?: ButtonService;
-    ledService?: LedService;
-    temperatureService?: TemperatureService;
-    accelerometerService?: AccelerometerService;
-    magnetometerService?: MagnetometerService;
-    uartService?: UartService;
-    eventService?: EventService;
-    dfuControlService?: DfuControlService;
-    ioPinService?: IoPinService;
-}
+// export interface Services {
+//     deviceInformationService?: DeviceInformationService;
+//     buttonService?: ButtonService;
+//     ledService?: LedService;
+//     temperatureService?: TemperatureService;
+//     accelerometerService?: AccelerometerService;
+//     magnetometerService?: MagnetometerService;
+//     uartService?: UartService;
+//     eventService?: EventService;
+//     dfuControlService?: DfuControlService;
+//     ioPinService?: IoPinService;
+// }
 
 /**
  * @hidden
@@ -74,63 +74,63 @@ class ServiceBuilder {
     }
 }
 
-export const requestMicrobit = async (bluetooth: Bluetooth): Promise<BluetoothDevice | undefined> => {
-    const device = await bluetooth.requestDevice({
-        filters: [
-            {
-                namePrefix: "BBC micro:bit"
-            }
-        ],
-        optionalServices: [
-            DeviceInformationService.uuid,
-            ButtonService.uuid,
-            LedService.uuid,
-            TemperatureService.uuid,
-            AccelerometerService.uuid,
-            MagnetometerService.uuid,
-            IoPinService.uuid,
-            UartService.uuid,
-            EventService.uuid,
-            DfuControlService.uuid
-        ]
-    });
+// export const requestMicrobit = async (bluetooth: Bluetooth): Promise<BluetoothDevice | undefined> => {
+//     const device = await bluetooth.requestDevice({
+//         filters: [
+//             {
+//                 namePrefix: "BBC micro:bit"
+//             }
+//         ],
+//         optionalServices: [
+//             DeviceInformationService.uuid,
+//             ButtonService.uuid,
+//             LedService.uuid,
+//             TemperatureService.uuid,
+//             AccelerometerService.uuid,
+//             MagnetometerService.uuid,
+//             IoPinService.uuid,
+//             UartService.uuid,
+//             EventService.uuid,
+//             DfuControlService.uuid
+//         ]
+//     });
 
-    return device;
-};
+//     return device;
+// };
 
-export const getServices = async (device: BluetoothDevice): Promise<Services> => {
-    if (!device || !device.gatt) {
-        return {};
-    }
+// export const getServices = async (device: BluetoothDevice): Promise<Services> => {
+//     if (!device || !device.gatt) {
+//         return {};
+//     }
 
-    if (!device.gatt.connected) {
-        await device.gatt.connect();
-    }
+//     if (!device.gatt.connected) {
+//         await device.gatt.connect();
+//     }
 
-    const services = await device.gatt.getPrimaryServices();
-    const builder = new ServiceBuilder(services);
+//     const services = await device.gatt.getPrimaryServices();
+//     const builder = new ServiceBuilder(services);
 
-    const deviceInformationService = await builder.createService(DeviceInformationService);
-    const buttonService = await builder.createService(ButtonService);
-    const ledService = await builder.createService(LedService);
-    const temperatureService = await builder.createService(TemperatureService);
-    const accelerometerService = await builder.createService(AccelerometerService);
-    const magnetometerService = await builder.createService(MagnetometerService);
-    const uartService = await builder.createService(UartService);
-    const eventService = await builder.createService(EventService);
-    const dfuControlService = await builder.createService(DfuControlService);
-    const ioPinService = await builder.createService(IoPinService);
+//     const deviceInformationService = await builder.createService(DeviceInformationService);
+//     const buttonService = await builder.createService(ButtonService);
+//     const ledService = await builder.createService(LedService);
+//     const temperatureService = await builder.createService(TemperatureService);
+//     const accelerometerService = await builder.createService(AccelerometerService);
+//     const magnetometerService = await builder.createService(MagnetometerService);
+//     const uartService = await builder.createService(UartService);
+//     const eventService = await builder.createService(EventService);
+//     const dfuControlService = await builder.createService(DfuControlService);
+//     const ioPinService = await builder.createService(IoPinService);
 
-    return {
-        deviceInformationService,
-        buttonService,
-        ledService,
-        temperatureService,
-        accelerometerService,
-        magnetometerService,
-        uartService,
-        eventService,
-        dfuControlService,
-        ioPinService
-    };
-};
+//     return {
+//         deviceInformationService,
+//         buttonService,
+//         ledService,
+//         temperatureService,
+//         accelerometerService,
+//         magnetometerService,
+//         uartService,
+//         eventService,
+//         dfuControlService,
+//         ioPinService
+//     };
+// };

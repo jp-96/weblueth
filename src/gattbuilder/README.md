@@ -1,3 +1,10 @@
+> **Note** Gatt Builder Utilities
+> 
+> These gatt builder utilities are adapted from parts of the [microbit-web-bluetooth](https://github.com/thegecko/microbit-web-bluetooth) library.
+> 
+> https://github.com/thegecko/microbit-web-bluetooth
+> 
+
 # micro:bit Web Bluetooth
 
 [![Circle CI](https://circleci.com/gh/thegecko/microbit-web-bluetooth.svg?style=shield&circle-token=a6f81fc05746394a595d8fe2b7c02eaf3120794b)](https://circleci.com/gh/thegecko/microbit-web-bluetooth/)
