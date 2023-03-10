@@ -1,5 +1,7 @@
 import React from 'react';
 import { WbxContextProvider } from '../../../src';
+import { createServiceBuilder } from '../../../src/gattbuilder';
+import { HeartRateService } from '../services/heartrate'
 
 const requestHeartRateSensor = async (bluetooth: Bluetooth): Promise<BluetoothDevice | undefined> => {
     return await bluetooth.requestDevice({
@@ -9,7 +11,7 @@ const requestHeartRateSensor = async (bluetooth: Bluetooth): Promise<BluetoothDe
 };
 
 export type Services = {
-    heart_rate?: BluetoothRemoteGATTService;
+    heartRateService?: HeartRateService;
     battery_service?: BluetoothRemoteGATTService;
 }
 
@@ -22,10 +24,10 @@ const getServices = async (device: BluetoothDevice): Promise<Services> => {
         await device.gatt.connect();
     }
     const services = await device.gatt.getPrimaryServices();
-    console.log("services:", services);
-    const heart_rate = await device.gatt.getPrimaryService('heart_rate');
+    const builder = createServiceBuilder(services);
+    const heartRateService = await builder.createService(HeartRateService);
     const battery_service = await device.gatt.getPrimaryService('battery_service');
-    return { heart_rate, battery_service };
+    return { heartRateService, battery_service };
 };
 
 type Props = {
