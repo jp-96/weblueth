@@ -1,55 +1,8 @@
 import React, { useCallback, useState } from 'react';
-import { useWbxActor, WbBoundCallback, WbxDevice, WbxServices } from '../../../src';
+import { useWbxActor, WbBoundCallback, WbxCustomEventCallback, WbxDevice, WbxServices } from '../../../src';
 import { Services } from './HeartRateContextProvider';
-
-/**
- * Web Bluetooth
- * Draft Community Group Report, 9 June 2022
- * Example
- * 
- * https://webbluetoothcg.github.io/web-bluetooth/#introduction-examples
- * 
- */
-
-type Result = {
-    heartRate?: any;
-    contactDetected?: any;
-    energyExpended?: any;
-    rrIntervals?: any
-};
-
-function parseHeartRate(data: any) {
-    let flags = data.getUint8(0);
-    let rate16Bits = flags & 0x1;
-    let result: Result = {};
-    let index = 1;
-    if (rate16Bits) {
-        result.heartRate = data.getUint16(index, /*littleEndian=*/true);
-        index += 2;
-    } else {
-        result.heartRate = data.getUint8(index);
-        index += 1;
-    }
-    let contactDetected = flags & 0x2;
-    let contactSensorPresent = flags & 0x4;
-    if (contactSensorPresent) {
-        result.contactDetected = !!contactDetected;
-    }
-    let energyPresent = flags & 0x8;
-    if (energyPresent) {
-        result.energyExpended = data.getUint16(index, /*littleEndian=*/true);
-        index += 2;
-    }
-    let rrIntervalPresent = flags & 0x10;
-    if (rrIntervalPresent) {
-        let rrIntervals = [];
-        for (; index + 1 < data.byteLength; index += 2) {
-            rrIntervals.push(data.getUint16(index, /*littleEndian=*/true) as never);
-        }
-        result.rrIntervals = rrIntervals;
-    }
-    return result;
-}
+import { HeartRateMeasurement, HeartRateService } from '../services/heartrate'
+import { HeartRate } from './HeartRate';
 
 function convLocation(sensorLocation) {
     switch (sensorLocation) {
@@ -67,9 +20,11 @@ function convLocation(sensorLocation) {
 const defaultName = "(none)";
 const defaultLocation = "(unknown)";
 
-export default function HeartRate() {
+export default function HeartRateDevice() {
+    /**
+     * State machine (xstate)
+     */
     const [state, send] = useWbxActor();
-
     const connectionName = state.context.conn.name;
 
     // xstate actions
@@ -88,8 +43,10 @@ export default function HeartRate() {
         console.log("disconnectedReason:", state.context.disconnectedReason.message);
     }
 
+    /**
+     * Device
+     */
     const [name, setName] = useState<string>(defaultName);
-
     const onDeviceBound: WbBoundCallback<BluetoothDevice> = bound => {
         if (bound.binding) {
             setName(bound.target.name!);
@@ -98,40 +55,13 @@ export default function HeartRate() {
         }
     }
 
-    const [heartRateMeasurement, setHeartRateMeasurement] = useState<BluetoothRemoteGATTCharacteristic | undefined>(undefined);
-    const [heartRate, setHeartRate] = useState<number | undefined>(undefined);
-    const [location, setLocation] = useState(defaultLocation);
+    /**
+     * Services
+     */
     const [batteryService, setBatteryService] = useState<BluetoothRemoteGATTService | undefined>(undefined);
     const [battery, setBattery] = useState<number | undefined>(undefined);
 
-    const onHeartRateMeasurementChanged = useCallback((event: any) => {
-        setHeartRate(parseHeartRate(event.target.value).heartRate);
-    }, []);
-
     const onServicesBound: WbBoundCallback<Services> = async bound => {
-        // heart_rate
-        const heart_rate = bound.target.heart_rate;
-        if (heart_rate) {
-            if (bound.binding) {
-                // heart_rate_measurement
-                const heart_rate_measurement = await heart_rate.getCharacteristic('heart_rate_measurement');
-                setHeartRateMeasurement(heart_rate_measurement);
-                heart_rate_measurement.addEventListener("characteristicvaluechanged", onHeartRateMeasurementChanged)
-                await heart_rate_measurement.startNotifications();
-                // body_sensor_location
-                const body_sensor_location = await heart_rate.getCharacteristic("body_sensor_location");
-                const value = await body_sensor_location.readValue();
-                setLocation(convLocation(value.getUint8(0)));
-            } else {
-                if (heartRateMeasurement) {
-                    await heartRateMeasurement.stopNotifications();
-                    heartRateMeasurement.removeEventListener("characteristicvaluechanged", onHeartRateMeasurementChanged)
-                }
-                setHeartRate(undefined);
-                setLocation(defaultLocation);
-
-            }
-        }
         // battery_service
         if (bound.binding) {
             setBatteryService(bound.target.battery_service);
@@ -152,10 +82,31 @@ export default function HeartRate() {
 
     }, [batteryService])
 
+    /**
+     * Heart Rate Service
+     */
+    const [heartRate, setHeartRate] = useState<number | undefined>(undefined);
+    const [location, setLocation] = useState(defaultLocation);
+
+    const onHeartRateServiceBound: WbBoundCallback<HeartRateService> = async bound => {
+        if (bound.binding) {
+            // body_sensor_location
+            const body_sensor_location = await bound.target.getBodySensorLocation();
+            setLocation(convLocation(body_sensor_location));
+        } else {
+            setHeartRate(undefined);
+            setLocation(defaultLocation);
+        }
+    };
+    const onHeartRateMeasurementChanged: WbxCustomEventCallback<HeartRateMeasurement> = async event => {
+        setHeartRate(event.detail.heartRate);
+    };
+
     return (
         <>
             <WbxDevice onDeviceBound={onDeviceBound} />
             <WbxServices onServicesBound={onServicesBound} />
+            <HeartRate onServiceBound={onHeartRateServiceBound} onHeartRateMeasurementChanged={onHeartRateMeasurementChanged} />
             {connectionName + ": [" + state.toStrings() + "]"}
             <br />
             <button onClick={reset}>RESET</button>
